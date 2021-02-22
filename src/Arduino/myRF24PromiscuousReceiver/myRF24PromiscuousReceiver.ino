@@ -47,13 +47,11 @@
 #define PRINT_MODE_BITS 1
 #define PRINT_MODE_COUNT 2
 
-// had two boards for testing, one UNO and a Mega2560
-// and was too lazy to comment / uncomment all the time
-#if defined(__AVR_ATmega2560__)
-	RF24 myRF24(49, 53);
-#elif defined(__AVR_ATmega328P__)
-	RF24 myRF24(9, 10);
-#endif
+#define CE_PIN   9
+#define CSN_PIN 10
+
+RF24 myRF24(CE_PIN, CSN_PIN);
+
 
 // buffer for reading incoming messages
 const uint8_t maxBufferSize = 32;
