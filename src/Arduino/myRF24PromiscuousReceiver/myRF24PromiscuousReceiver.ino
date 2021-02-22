@@ -73,7 +73,7 @@ boolean isListening = false;
 
 // for a heartbeat to show that the program is still running
 // when there is no transmissions
-boolean hasHeartbeat = false;
+boolean hasHeartbeat = true;
 uint8_t heartbeatCounter = 0;
 long timer;
 long timerThreshold = 1000;
@@ -263,6 +263,7 @@ void loop() {
 		char inChar = Serial.read();
 
 		if (inChar == 'a') {
+      Serial.println("Toggle Address");
 			toggleAddress();
 
 		} else if (inChar == 'b' && Serial.available()) { // if (inChar == 'a') {
@@ -272,25 +273,31 @@ void loop() {
 			if (inChar == '+') {
 				if (bufferSize < maxBufferSize) {
 					bufferSize++;
+          Serial.println("Increase Buffer Size");
 				} // if (bufferSize < maxBufferSize) {
 			} else if (inChar == '-') { // if (inChar == '+') {
 				if (bufferSize > 0) {
 					bufferSize--;
+          Serial.println("Decrease Buffer Size");
 				} // if (bufferSize < maxBufferSize) {
 			} // else if (inChar == '-') { // if (inChar == '+') {
 
 		} else if (inChar == 'p') { // if (inChar == 'a') {
 			if (printMode < PRINT_MODE_COUNT) {
 				printMode++;
+        Serial.println("Toggle Print Mode");
 			} else { // if (printMode < PRINT_MODE_COUNT) {
 				printMode = 0;
+        Serial.println("Toggle Print Mode");
 			} // } else { // if (printMode < PRINT_MODE_COUNT) {
 
 		} else if (inChar == 'h') {
 			hasHeartbeat = !hasHeartbeat;
+      Serial.println("Toggle Heart Beat");
 
 		} else if (inChar == 's') { // if (inChar == 'a') {
 			isRunning = !isRunning;
+      Serial.println("Toggle Is Running");
 
 		} // if (inChar == 'a') {
 	} // if(Serial.available()) {
