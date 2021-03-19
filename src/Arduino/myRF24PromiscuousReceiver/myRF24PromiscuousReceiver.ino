@@ -59,7 +59,7 @@ uint8_t myBuffer[maxBufferSize];
 uint8_t bufferSize = 16;
 
 // channel to listen to
-uint8_t channel = 60;
+uint8_t channel = 0;
 
 // there are two address modes: 0x55 and 0xAA
 boolean addressMode = true;
@@ -98,7 +98,10 @@ void setup() {
 	// start the radio
 	myRF24.begin();
 
-
+	//The nRF24L01+ transceiver module transmits and receives data on a certain frequency called Channel. 
+	//This channel could be any frequency in the 2.4 GHz ISM band or to be more precise, 
+	//it could be between 2.400 to 2.525 GHz (2400 to 2525 MHz).
+    //Each channel occupies a bandwidth of less than 1MHz. This gives us 125 possible channels with 1MHz spacing.
 	myRF24.setChannel(channel);
 
 	// disable error control features
@@ -107,7 +110,7 @@ void setup() {
 	// disable sending out acknowledge messages
 	myRF24.setAutoAck(false);
 
-
+	//  The data transfer rate can be one of 250kbps, 1Mbps and 2Mbps.
 	myRF24.setDataRate(RF24_1MBPS);
 
 
@@ -258,6 +261,7 @@ void loop() {
 	// h			toggle heartBeat
 	// p			toggle print mode (bits / bytes)
 	// s			start / stop
+	// c            increase the channel
 	if(Serial.available()) {
 		// check first char
 		char inChar = Serial.read();
@@ -299,7 +303,18 @@ void loop() {
 			isRunning = !isRunning;
       Serial.println("Toggle Is Running");
 
-		} // if (inChar == 'a') {
+		} else if (inChar == 'c')
+		{
+			channel++;
+			Serial.println("Increased Channel to ");
+			Serial.print(channel);
+			Serial.println("\n");
+			setup();
+			
+		} 
+		
+		
+		// if (inChar == 'a') {
 	} // if(Serial.available()) {
 } // void loop() {
 
